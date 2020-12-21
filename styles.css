@@ -1,0 +1,68 @@
+body {
+    font-family: 'Press Start 2P', cursive;;
+    color: white;
+    background-image: url(https://media1.tenor.com/images/86095bc65edce9cf36a661e7bdc960ff/tenor.gif?itemid=15688443);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+}
+
+
+
+
+h1 {
+    font-size: 25px; 
+    color: red;
+    animation: flash 0.1s infinite alternate-reverse;
+}
+
+@keyframes flash {
+    from {
+        color:red;
+    }
+    to {
+        color:yellow;
+    }
+}
+
+ul {
+    padding: 50px;
+    margin: 0 auto;
+}
+
+li{
+    list-style: none;
+    border: 1px black solid; 
+    display: block;
+    width: 320px;
+    padding: 15px;
+    margin: 5px auto;
+}
+
+li:hover {
+    background-color: white;
+    transition: all 0.5s
+}
+
+li img {width:100%;}
+
+div {
+    background: rgba(0, 0, 0, 0.85);
+    width: 50%;
+    min-width: 320px;
+    margin: auto;
+    text-align: center;
+    padding: 30px;
+    border: 10px;
+    border-style: groove;
+    border-radius: 5px;
+}
+
+a {
+    color: lime;
+    transition: all 0.5s
+}
+
+a:hover {
+    color: blue
+}
