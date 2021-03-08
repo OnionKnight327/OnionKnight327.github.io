@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPC Generator</title>
+    <style>
+        #npc_sheet {
+            width:420px;
+            margin:auto;
+            display:none;
+        }
+
+        #npc_sheet.active {
+            display:table;
+        }
+
+        .controls{
+            width:420px;
+            margin:0 auto;
+            text-align:center;
+            padding:15px 0;
+        }
+
+        table td{
+            padding:5px;
+        }
+
+        body{
+            font-family: 'DotGothic16', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="controls">
+        <select id="race">
+            <option value="human">Human</option>
+            <option value="elf">Elf</option>
+            <option value="dwarf">Dwarf</option>
+        </select>
+
+        <button id = "generate">Create</button>
+    </div>
+
+    <table border = "1", id = "npc_sheet">
+        <tr>
+
+            <td width = "25%">Name</td>
+            <td id="npc_name">--</td>
+
+        </tr>
+        <tr>
+
+            <td>Race</td>
+            <td id="npc_race_name" style="text-transform: capitalize;">--</td>
+
+        </tr>
+        <tr>
+
+            <td>Age</td>
+            <td id="npc_age">--</td>
+
+        </tr>
+        <tr>
+
+            <td>Inventory</td>
+            <td id="npc_loot">--</td>
+
+        </tr>
+        <tr>
+
+            <td>Personality</td>
+            <td id="quirks">--</td>
+
+        </tr>
+
+
+    </table>
+
+
+
+    <script>
+
+        function getRandomInt(max){
+            return Math.floor(Math.random() * Math.floor(max)+1);
+        }
+
+        function randomItem(items){
+            return items[Math.floor(Math.random() * items.length)];
+
+        }
+
+        var races = [
+
+        ]
+        
+        var human_names = [
+            "Dildo Swaggins",
+            "Baller",
+            "Kidd",
+            "Daryl",
+            "Rick"
+        ];
+
+        var elf_names = [
+            "Legoless",
+            "Nimble Dimble",
+            "Lettus",
+            "Cappauge",
+            "Lief"
+        ]
+
+        var dwarf_names = [
+            "Jibble",
+            "Gamble",
+            "Garble",
+            "Tin",
+            "Not-a-Gnome"
+        ]
+
+        var npc_titles = [
+            "the Tainted",
+            "the Defiled",
+            "the Squished",
+            "the Baby",
+            "the Big",
+            "the Stinky",
+            "the Ungrateful",
+            "the Bold",
+            "the Lesser",
+            "the Greater",
+            "the Haunted",
+            "the Powerful",
+            "the Weakened"
+        ];
+
+        var names = {
+            "human": human_names,
+            "elf": elf_names,
+            "dwarf": dwarf_names
+        };
+
+        
+        var common = [
+        "a spool of string", 
+        "a wooden token engraved with a dinosaur's head", 
+        "a candle", 
+        "the world's tiniest violin",
+        "a fluffy caterpillar with a taste for clothes of linen",
+        getRandomInt(9)+1 + " copper coins"
+    ];
+
+        var uncommon = [
+        "a dagger",
+        "a small black book with a list of names",
+        "a portrait of a girl's smiling face",
+        "a wood carving of a bear with a cape",
+        "A half eaten piece of magical beef jerky",
+        getRandomInt(9)+1 + " silver coins"
+    ];
+
+        var rare = [
+        "a wand",
+        "a super rock",
+        "a sentient pickle named Rick",
+        "a music box with three switchable songs",
+        "a page from a book that no one should read",
+        getRandomInt(9)+1 + " gold coins"
+    ];
+
+        var quirks = [
+"Always asks for a bite of whatever someone is eating.",
+"Always buying new clothes",
+"Always carries fresh cut flowers",
+"Always eating or drinking",
+"Always out of breath.",
+"Always practicing a fire starting cantrip.",
+"Always scratching a rash.",
+"Asks often about own appearance.",
+"Asks rhetorical questions.",
+"Belches often.",
+"Bites fingernails",
+"Boring",
+"Calls PCs by wrong names consistently.",
+"Carries cloth covered basket (What is in there?)",
+"Carries small lizard.",
+"Carves simple animal figurines for children.",
+"Changes hair color weekly",
+"Cleans nails with knife as he speaks.",
+"Clothes made of woven leaves, yet lives in town.",
+"Complainer",
+"Complains of heartburn.",
+"Complements sincerely.",
+"Conceited, obnoxiously so.",
+"Depressed",
+"Dislikes music",
+"Disorganized",
+"Doesn’t let things go.",
+"Dude hooks thumbs in his belt when he stands.",
+"Fair-skinned",
+"Falsely claims he was an adventurer too.",
+"Feeds crumbs to birds.",
+"Fidgets",
+"Foul-mouthed",
+"Giggles endearingly.",
+"Goes barefoot whenever possible",
+"Goes strictly by-the-book",
+"Graceful",
+"Greedy",
+"Hands coppers to beggar kids.",
+"Hard of hearing to hilarious results.",
+"Has long pauses before talking.",
+"Hates children",
+"Haunted",
+"Highly superstitious.",
+"Hopelessly optimistic.",
+"Instructs PCs in latest fashion, yet looks a little silly.",
+"Invades personal space on every meeting.",
+"Is a chain smoker",
+"Is always chewing on a stick.",
+"Jingles gold pieces in pocket.",
+"Keeps a goat on a leash.",
+"Keeps hand on PCs shoulder when speaking to them.",
+"Kind",
+"Likes children",
+"Likes smoking",
+"Likes to read books",
+"Likes to take things apart to see how they work",
+"Lonely",
+"Machiavellian",
+"Makes plans.",
+"Makes puns.",
+"Military mannerisms, clear in how he carries himself.",
+"Mixes languages during every conversation.",
+"Mutters to himself and twitches.",
+"NPC gives himself a different name every meeting.",
+"NPC rubs the back of his neck as he speaks.",
+"Ogles opposite sex openly.",
+"Openly racist.",
+"Picks ears",
+"Picks lint off PCs clothes.",
+"Polishes odd eyepieces, but never puts them on.",
+"Pouts.",
+"Profusely sweats even when at rest",
+"Refers to good ‘ole days in every conversation.",
+"Repeats things back to you.",
+"Rings sewn all over his/her clothes.",
+"Rubs chin as in deep thought.",
+"Rubs hands together",
+"Rubs hands together when he speaks.",
+"Rubs large belly as he (she?) talks.",
+"Rubs palms on thighs.",
+"Says “hmmm hmmm” often. (Habit or is he that agreeable?)",
+"Sharpens knife incessantly.",
+"They blows stray hair out of eyes.",
+"They carries satchel filed with junk.",
+"They nods often.",
+"They snorts when laughing (It’s endearing.)",
+"They stares off when speaking.",
+"Smacks palm with fist.",
+"Sniffs the air.",
+"Spit polished bracelet that clearly holds personal meaning.",
+"Spits when talking",
+"Sucks on teeth",
+"Superstitious",
+"Sways nervously.",
+"Talks often about seeing the world some day.",
+"Tugs on ear.",
+"Wine colored birthmark highly visible on body."
+];
+
+    function rollInventory(){
+            var inventory = [
+                randomItem(common)
+            ]
+
+            var inventory_roll = getRandomInt(10);
+
+            if(inventory_roll >= 5){
+                inventory.push(randomItem(uncommon));
+            }
+            if(inventory_roll >= 9){
+                inventory.push(randomItem(rare));
+            }
+
+            return inventory;
+        }
+
+
+    document.addEventListener("DOMContentLoaded", function(){
+
+    var button = document.getElementById("generate");
+    var npc_name = document.getElementById("npc_name");
+    var npc_race_name = document.getElementById("npc_race_name");
+    var npc_age = document.getElementById("npc_age");
+    var npc_loot = document.getElementById("npc_loot");
+    var npc_quirks = document.getElementById("quirks");
+
+    var npc_sheet = document.getElementById("npc_sheet")
+    
+    button.addEventListener("click", function(){
+
+        var npc_race = document.getElementById("race").value;
+
+        npc_name.innerHTML = randomItem(names[npc_race]) + " " + randomItem(npc_titles) //displays the names and titles of the npcs
+        npc_age.innerHTML = getRandomInt(99) //99 is the max age of the npcs
+        npc_race_name.innerHTML = npc_race
+        var inventory = rollInventory();
+        npc_loot.innerHTML = inventory.join(", ")
+        npc_quirks.innerHTML = randomItem(quirks)
+        npc_sheet.classList.add("active");
+
+    }) //button
+        
+    })
+    </script>
+
+</body>
+</html>
