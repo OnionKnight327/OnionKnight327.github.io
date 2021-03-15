@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who's That Pokemon?</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="style.css" rel = "stylesheet" type = "text/css" >
+</head>
+<body>
+    <div id = "game">
+    <div id = "score_and_timer" class = "blade">
+
+        <div id = "score">69</div>
+        <div id = "timer">4:20</div>
+
+    </div>
+
+    <div id = "gamefield" class = "blade">    
+        <div id = "pokemon">
+            <img id = "pokemon-image" src = "">
+            <div id = "pokemon-name">PIKACHU</div>
+        </div>
+        <div id = "game-over">You ran out of time! You gave 1000 Pokedollars to the winner. You blacked out...</div>
+    </div>
+
+    <div id = "controls" class = "blade">
+        <div id = "before_start">
+            <button id = "start_game">Start Game</button>
+        </div>
+
+        <div id = "after_start">
+            <form id = "guess_form">
+            <input type = "text" id = "guess" autocomplete="off">
+            <button id = "submit_guess" type = "submit">Guess</button>
+            </form>
+        </div>
+
+    </div>
+    </div>
+
+    <script src = "main.js"></script>
+</body>
+</html>
