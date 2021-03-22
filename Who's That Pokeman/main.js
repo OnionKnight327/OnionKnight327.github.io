@@ -1,4 +1,6 @@
 var current_pokemon;
+var gamepoints = 0;
+var timer = 60;
 
 
 function getRandomInt(max){
@@ -7,7 +9,7 @@ function getRandomInt(max){
 
 function get_a_pokemon(){
 
-    var max_id = 151; //max Kanto Pokemon dex entries
+    var max_id = 898; //151 is max Kanto Pokemon dex entries, 898 is max National Dex entries
 
     var random_pokemon = getRandomInt(max_id);
 
@@ -26,7 +28,8 @@ function get_a_pokemon(){
 }
 
 function set_Pokemon(pokemon){
-    pokemon.name= pokemon.name.replace("-m", "").replace("-f", "");
+    //command below replaces misnamed file names
+    pokemon.name= pokemon.name.replace("-male", "").replace("-female", "").replace("mr-mime", "mr. mime").replace("idday", "").replace("-shield", "").replace("nidoran-m", "nidoran").replace("nidoran-f", "nidoran").replace("-average", "").replace("-ordinary", "");
 
     current_pokemon = pokemon;
 
@@ -39,6 +42,7 @@ function set_Pokemon(pokemon){
 
     pokemon_name.innerHTML = pokemon.name;
     pokemon_image.src = pokemon["sprites"]["other"]["official-artwork"]["front_default"];
+    pokemon_image.classList.remove("revealed");
 
 }
 
@@ -52,7 +56,22 @@ function startGame(){
     var game_controls = document.getElementById("after_start");
     game_controls.className = "active";
 
-    //a timer start will go here
+    //a timer start will start here
+    var countdown = setInterval(
+        function(){
+            timer--;
+            var htmltimer = document.getElementById("timer");
+            htmltimer.innerHTML = timer;
+
+            if(timer == 0){
+
+                clearInterval(countdown);
+                gameover();
+            }
+
+        },
+        1000
+    );
 
 
 }
@@ -68,20 +87,70 @@ function check_guess(guess){
 
 }
 
+function show_pokemon(){
+    var pokemon_img = document.getElementById("pokemon-image");
+    pokemon_img.classList.add("revealed");
+}
+
+function gameover(){
+    show_message("Thanks for playing! <br> Your final score was " + gamepoints);
+    var guessform           = document.getElementById("guess_form");
+    guess_form.remove();
+
+    var restart_button = document.getElementById("restart");   
+    restart_button.style.display = "inline-block";
+
+    var game_over_message = document.getElementById("game-over");
+    game_over_message.style.display = "block";
+
+    var pokemon_name = document.getElementById("pokemon-name");
+    pokemon_name.style.display = "block";
+
+};
+
+function show_message(msg){
+    var message = document.getElementById("message");
+    message.innerHTML = msg;
+};
 
 document.addEventListener("DOMContentLoaded", function(){
-    var start_button = document.getElementById("start_game");
+    var start_button        = document.getElementById("start_game");
+    var htmlpoints          = document.getElementById("score");
+    var guess_button        = document.getElementById("submit_guess");
+    var guess_text          = document.getElementById("guess");
+    var guessform           = document.getElementById("guess_form");
+    var game                = document.getElementById("game");
+    var reset_button        = document.getElementById("restart");
 
-    var guess_button = document.getElementById("submit_guess");
-    var guess_text = document.getElementById("guess");
-    var guessform = document.getElementById("guess_form");
 
     guess_form.addEventListener("submit", function(event){
         event.preventDefault();
 
-        if(check_guess(guess_text.value)){
+        if(check_guess(guess_text.value)){ //correct answers:
 
-            get_a_pokemon();
+            gamepoints = gamepoints + 10
+            htmlpoints.innerHTML = gamepoints;
+            show_pokemon();
+            setTimeout(
+                function(){
+                get_a_pokemon();
+                },
+                1000
+            );
+
+            show_message("Correct!")
+        }
+        else{
+            //incorrect answers:
+            game.classList.add("shake");
+            setTimeout(function(){
+                game.classList.remove("shake");
+            }, 500);
+
+            guessform.reset();
+            guess_text.focus();
+            show_message("Incorrect! Make sure the spelling is correct!")
+            
         }
 
 
@@ -90,6 +159,12 @@ document.addEventListener("DOMContentLoaded", function(){
     start_button.addEventListener("click", function(){
     startGame();
     });
+
+    reset_button.addEventListener("click", function(){
+    location.reload();
+    });
+
+
 
 
 });

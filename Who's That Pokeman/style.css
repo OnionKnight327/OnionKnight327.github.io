@@ -9,9 +9,13 @@ html, body{
 
 body{
     font-family: 'Press Start 2P', cursive;
-    background: black;  
+    background-image:url("images/legendarybattle.jpg");
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center;
 }
 
+input, button {font-family: 'Press Start 2P', cursive;}
 
 
 .blade{
@@ -21,11 +25,25 @@ body{
 }
 
 #game{
-    max-width:800px;
+    max-width:600px;
     width:100%;
     margin:33px auto;
     padding:15px;
     background:white;
+    border-radius:8px;
+}
+
+.shake{
+    animation-name: shake;
+    animation-duration: 0.15s;
+    animation-iteration-count: 2;
+    animation-direction: alternate;
+}
+
+#message{
+    text-align:center;
+    color:white;
+    padding:15px;
 }
 
 #score_and_timer {
@@ -40,6 +58,8 @@ body{
     background-position:center;
     padding-top:75%;    
     position:relative;
+    box-shadow:inset 0px 0px 5px black;
+
 }
 
 #game-over{
@@ -65,7 +85,11 @@ body{
 #pokemon-image{
     max-width:100%;
     filter:contrast(0) brightness(0%);
-    transition:all 0.5;
+    transition:all 0.25;
+}
+
+.revealed{
+    filter:none !important;
 }
 
 #pokemon-name{
@@ -78,6 +102,11 @@ body{
 #controls{
     justify-content: center;
     padding: 15px;
+    text-align:center;
+}
+
+#restart{
+    display:none;
 }
 
 #after_start{
@@ -86,4 +115,16 @@ body{
 
 .active{
     display:block !important;
+}
+
+@keyframes shake {
+
+    25% {
+            transform:translateX(-15px);
+            background-color: red;
+    }
+    50% {
+            transform:translateX(15px);
+            background-color: red;
+    }
 }
